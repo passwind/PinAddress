@@ -10,6 +10,7 @@
 
 #import "UnitScopeViewController.h"
 #import "EditingViewController.h"
+#import "UnitPhotoViewController.h"
 
 #import "AppDelegate.h"
 
@@ -26,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *longitudeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *latitudeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scopeDetailLabel;
+@property (weak, nonatomic) IBOutlet UILabel *photoDetailLabel;
 
 @property (nonatomic, strong) NSUndoManager *undoManager;
 
@@ -111,6 +113,7 @@
     self.latitudeLabel.text = [NSString stringWithFormat:@"%.6f",[self.unit.latitude floatValue]];
     self.longitudeLabel.text = [NSString stringWithFormat:@"%.6f",[self.unit.longitude floatValue]];
     self.scopeDetailLabel.text=[NSString stringWithFormat:@"%d",[self.unit.scope count]];
+    self.photoDetailLabel.text=[NSString stringWithFormat:@"%d",[self.unit.photo count]];
 }
 
 - (void)updateRightBarButtonItemState {
@@ -137,12 +140,12 @@
 /*
  Manage row selection: If a row is selected, create a new editing view controller to edit the property associated with the selected row.
  */
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (self.editing && indexPath.section==0) {
-        [self performSegueWithIdentifier:@"EditSelectedItem" sender:self];
-    }
-}
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+//    
+//    if (self.editing && indexPath.section==0) {
+//        [self performSegueWithIdentifier:@"EditSelectedItem" sender:self];
+//    }
+//}
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -266,6 +269,11 @@
     if ([[segue identifier] isEqualToString:@"ShowUnitScope"]) {
         UnitScopeViewController *unitScopeViewController=(UnitScopeViewController*)[segue destinationViewController];
         unitScopeViewController.unit=self.unit;
+    }
+    
+    if ([[segue identifier] isEqualToString:@"ShowUnitPhoto"]) {
+        UnitPhotoViewController *unitPhotoViewController=(UnitPhotoViewController*)[segue destinationViewController];
+        unitPhotoViewController.unit=self.unit;
     }
 }
 

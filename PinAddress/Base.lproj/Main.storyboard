@@ -238,6 +238,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="zwH-ZX-BNu" kind="push" identifier="ShowUnitPhoto" id="gZb-uC-F91"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -254,12 +257,73 @@
                         <outlet property="latitudeLabel" destination="v95-Vx-INp" id="ebN-YE-KcS"/>
                         <outlet property="longitudeLabel" destination="RRy-uu-UoW" id="TT3-9x-AI3"/>
                         <outlet property="nameLabel" destination="Vo5-dD-7Ee" id="mrD-id-6Gn"/>
+                        <outlet property="photoDetailLabel" destination="UFE-5f-JpN" id="7gC-Yp-gkC"/>
                         <outlet property="scopeDetailLabel" destination="zYO-kC-nh1" id="AaP-z2-cpA"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sVb-uN-7eY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="939" y="64"/>
+        </scene>
+        <!--Unit Photo View Controller - 地点图片-->
+        <scene sceneID="Mb2-B2-1UD">
+            <objects>
+                <viewController id="zwH-ZX-BNu" customClass="UnitPhotoViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="rct-MQ-pHa">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="85" sectionHeaderHeight="22" sectionFooterHeight="22" id="HbQ-8n-Xdl">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="436"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="UnitPhotoCell" rowHeight="85" id="iT6-sq-abZ" customClass="UnitPhotoCell">
+                                        <rect key="frame" x="0.0" y="86" width="320" height="85"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iT6-sq-abZ" id="yZh-xW-mBK">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="84"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="Qre-MB-J0m">
+                                                    <rect key="frame" x="20" y="0.0" width="190" height="84"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                </imageView>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="imageView" destination="Qre-MB-J0m" id="kED-4n-xto"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="zwH-ZX-BNu" id="09Y-Ag-6N4"/>
+                                    <outlet property="delegate" destination="zwH-ZX-BNu" id="zyg-Sv-KMc"/>
+                                </connections>
+                            </tableView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="vae-YI-jPZ">
+                                <rect key="frame" x="0.0" y="436" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="t0Q-Bf-kCW"/>
+                                    <barButtonItem systemItem="add" id="4iM-eE-3tm">
+                                        <connections>
+                                            <action selector="newPhoto:" destination="zwH-ZX-BNu" id="ZlB-ig-ceG"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="地点图片" id="z3K-df-uQ9"/>
+                    <connections>
+                        <outlet property="tableView" destination="HbQ-8n-Xdl" id="gZQ-Ev-Epa"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eyr-7C-ajw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1429" y="335"/>
         </scene>
         <!--Unit Scope View Controller - 范围坐标点-->
         <scene sceneID="V9m-c5-bRI">
@@ -270,7 +334,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="pkf-KN-QU8">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="436"/>
+                                <rect key="frame" x="0.0" y="-6" width="320" height="436"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -328,7 +392,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fs2-hx-lxM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1375" y="650"/>
+            <point key="canvasLocation" x="1930" y="74"/>
         </scene>
         <!--Add Unit View Controller - 添加新地点-->
         <scene sceneID="K8o-EC-JO9">

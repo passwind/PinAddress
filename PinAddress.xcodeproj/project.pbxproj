@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		E4238BBA1883D3BC00B98F7B /* EditingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4238BB91883D3BC00B98F7B /* EditingViewController.m */; };
+		E4238BC518848DBA00B98F7B /* Unit.m in Sources */ = {isa = PBXBuildFile; fileRef = E4238BC418848DBA00B98F7B /* Unit.m */; };
+		E4238BC818848EEC00B98F7B /* UnitPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4238BC718848EEC00B98F7B /* UnitPhotoViewController.m */; };
+		E4238BCB18848F0600B98F7B /* UnitPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E4238BCA18848F0600B98F7B /* UnitPhotoCell.m */; };
+		E4238BCE188492C900B98F7B /* UnitPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = E4238BCD188492C900B98F7B /* UnitPhoto.m */; };
 		E438A9081880295C00678F84 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E438A9071880295C00678F84 /* Foundation.framework */; };
 		E438A90A1880295C00678F84 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E438A9091880295C00678F84 /* CoreGraphics.framework */; };
 		E438A90C1880295C00678F84 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E438A90B1880295C00678F84 /* UIKit.framework */; };
@@ -28,7 +32,6 @@
 		E438A94A1880317C00678F84 /* AddUnitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E438A9491880317C00678F84 /* AddUnitViewController.m */; };
 		E438A94D188031AA00678F84 /* UnitDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E438A94C188031AA00678F84 /* UnitDetailViewController.m */; };
 		E438A950188031F200678F84 /* UnitScopeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E438A94F188031F200678F84 /* UnitScopeViewController.m */; };
-		E438A9591880350200678F84 /* Unit.m in Sources */ = {isa = PBXBuildFile; fileRef = E438A9581880350200678F84 /* Unit.m */; };
 		E438A95C1880350300678F84 /* UnitScope.m in Sources */ = {isa = PBXBuildFile; fileRef = E438A95B1880350300678F84 /* UnitScope.m */; };
 		E438A95E1880405600678F84 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E438A95D1880405600678F84 /* CoreLocation.framework */; };
 		E438A96118804D8800678F84 /* UnitScopeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E438A96018804D8800678F84 /* UnitScopeCell.m */; };
@@ -47,6 +50,14 @@
 /* Begin PBXFileReference section */
 		E4238BB81883D3BC00B98F7B /* EditingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditingViewController.h; sourceTree = "<group>"; };
 		E4238BB91883D3BC00B98F7B /* EditingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditingViewController.m; sourceTree = "<group>"; };
+		E4238BC318848DBA00B98F7B /* Unit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Unit.h; sourceTree = "<group>"; };
+		E4238BC418848DBA00B98F7B /* Unit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Unit.m; sourceTree = "<group>"; };
+		E4238BC618848EEC00B98F7B /* UnitPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnitPhotoViewController.h; sourceTree = "<group>"; };
+		E4238BC718848EEC00B98F7B /* UnitPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnitPhotoViewController.m; sourceTree = "<group>"; };
+		E4238BC918848F0600B98F7B /* UnitPhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnitPhotoCell.h; sourceTree = "<group>"; };
+		E4238BCA18848F0600B98F7B /* UnitPhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnitPhotoCell.m; sourceTree = "<group>"; };
+		E4238BCC188492C900B98F7B /* UnitPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnitPhoto.h; sourceTree = "<group>"; };
+		E4238BCD188492C900B98F7B /* UnitPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnitPhoto.m; sourceTree = "<group>"; };
 		E438A9041880295C00678F84 /* PinAddress.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PinAddress.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E438A9071880295C00678F84 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E438A9091880295C00678F84 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -74,8 +85,6 @@
 		E438A94C188031AA00678F84 /* UnitDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnitDetailViewController.m; sourceTree = "<group>"; };
 		E438A94E188031F200678F84 /* UnitScopeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnitScopeViewController.h; sourceTree = "<group>"; };
 		E438A94F188031F200678F84 /* UnitScopeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnitScopeViewController.m; sourceTree = "<group>"; };
-		E438A9571880350200678F84 /* Unit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Unit.h; sourceTree = "<group>"; };
-		E438A9581880350200678F84 /* Unit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Unit.m; sourceTree = "<group>"; };
 		E438A95A1880350300678F84 /* UnitScope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnitScope.h; sourceTree = "<group>"; };
 		E438A95B1880350300678F84 /* UnitScope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnitScope.m; sourceTree = "<group>"; };
 		E438A95D1880405600678F84 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -161,12 +170,18 @@
 				E438A94C188031AA00678F84 /* UnitDetailViewController.m */,
 				E438A94E188031F200678F84 /* UnitScopeViewController.h */,
 				E438A94F188031F200678F84 /* UnitScopeViewController.m */,
-				E438A9571880350200678F84 /* Unit.h */,
-				E438A9581880350200678F84 /* Unit.m */,
 				E438A95A1880350300678F84 /* UnitScope.h */,
 				E438A95B1880350300678F84 /* UnitScope.m */,
 				E438A95F18804D8800678F84 /* UnitScopeCell.h */,
 				E438A96018804D8800678F84 /* UnitScopeCell.m */,
+				E4238BC318848DBA00B98F7B /* Unit.h */,
+				E4238BC418848DBA00B98F7B /* Unit.m */,
+				E4238BC618848EEC00B98F7B /* UnitPhotoViewController.h */,
+				E4238BC718848EEC00B98F7B /* UnitPhotoViewController.m */,
+				E4238BC918848F0600B98F7B /* UnitPhotoCell.h */,
+				E4238BCA18848F0600B98F7B /* UnitPhotoCell.m */,
+				E4238BCC188492C900B98F7B /* UnitPhoto.h */,
+				E4238BCD188492C900B98F7B /* UnitPhoto.m */,
 			);
 			path = PinAddress;
 			sourceTree = "<group>";
@@ -297,15 +312,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E438A9591880350200678F84 /* Unit.m in Sources */,
 				E438A94A1880317C00678F84 /* AddUnitViewController.m in Sources */,
 				E438A9201880295C00678F84 /* PinAddress.xcdatamodeld in Sources */,
 				E4238BBA1883D3BC00B98F7B /* EditingViewController.m in Sources */,
 				E438A91A1880295C00678F84 /* AppDelegate.m in Sources */,
+				E4238BCE188492C900B98F7B /* UnitPhoto.m in Sources */,
 				E438A950188031F200678F84 /* UnitScopeViewController.m in Sources */,
+				E4238BC818848EEC00B98F7B /* UnitPhotoViewController.m in Sources */,
 				E438A94D188031AA00678F84 /* UnitDetailViewController.m in Sources */,
 				E438A96118804D8800678F84 /* UnitScopeCell.m in Sources */,
 				E438A9471880312B00678F84 /* UnitViewController.m in Sources */,
+				E4238BCB18848F0600B98F7B /* UnitPhotoCell.m in Sources */,
+				E4238BC518848DBA00B98F7B /* Unit.m in Sources */,
 				E438A9161880295C00678F84 /* main.m in Sources */,
 				E438A95C1880350300678F84 /* UnitScope.m in Sources */,
 			);

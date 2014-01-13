@@ -7,8 +7,14 @@
         <attribute name="name" optional="YES" attributeType="String">
             <userInfo/>
         </attribute>
+        <relationship name="photo" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="UnitPhoto" inverseName="unit" inverseEntity="UnitPhoto" syncable="YES"/>
         <relationship name="scope" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="UnitScope" inverseName="unit" inverseEntity="UnitScope" syncable="YES"/>
         <userInfo/>
+    </entity>
+    <entity name="UnitPhoto" representedClassName="UnitPhoto" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="localSrc" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="unit" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Unit" inverseName="photo" inverseEntity="Unit" syncable="YES"/>
     </entity>
     <entity name="UnitScope" representedClassName="UnitScope" syncable="YES">
         <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
@@ -19,5 +25,6 @@
     <elements>
         <element name="Unit" positionX="0" positionY="0" width="128" height="120"/>
         <element name="UnitScope" positionX="0" positionY="0" width="128" height="103"/>
+        <element name="UnitPhoto" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>
