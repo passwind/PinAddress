@@ -13,7 +13,9 @@
 
 @interface UnitScopeViewController ()
 
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) UIBarButtonItem *rightBarButtonItem;
+- (IBAction)newScope:(id)sender;
 @end
 
 @implementation UnitScopeViewController
@@ -43,15 +45,6 @@
     return _fetchedResultsController;
 }
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -59,7 +52,12 @@
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
-    self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    UIBarButtonItem *editButton = [[UIBarButtonItem alloc]
+                                   initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editAction:)];
+    
+    self.navigationItem.rightBarButtonItem = editButton;
+    
+    
     self.title=[NSString stringWithFormat:@"%@ 范围坐标",_unit.name];
     
     self.managedObjectContext=_unit.managedObjectContext;
@@ -158,7 +156,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
         // Delete the managed object.
-        NSManagedObjectContext *context = self.managedObjectContext;//[self.fetchedResultsController managedObjectContext];
+        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
         [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
         
         NSError *error;
@@ -217,7 +215,7 @@
 
 #pragma mark - add method
 
-- (IBAction)add:(id)sender {
+- (IBAction)newScope:(id)sender {
     UnitScope * newScope=[NSEntityDescription insertNewObjectForEntityForName:@"UnitScope" inManagedObjectContext:self.managedObjectContext];
     newScope.createdAt=[NSDate date];
     newScope.latitude=[NSNumber numberWithFloat:gLocation.coordinate.latitude];
@@ -233,6 +231,31 @@
         NSLog(@"Unresolved error %@, %@",error,[error userInfo]);
         abort();
     }
+}
+
+- (void)editAction:(id)sender {
+	[self.tableView setEditing:YES animated:YES];
+	[self addButtons:self.tableView.editing];
+}
+
+- (void)addButtons:(BOOL)editing {
+	if (editing) {
+		// Add the "done" button to the navigation bar
+		UIBarButtonItem *doneButton = [[UIBarButtonItem alloc]
+									   initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneAction:)];
+		
+		self.navigationItem.rightBarButtonItem = doneButton;
+	} else {
+		UIBarButtonItem *editButton = [[UIBarButtonItem alloc]
+										   initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editAction:)];
+			
+        self.navigationItem.rightBarButtonItem = editButton;
+	}
+}
+
+- (void)doneAction:(id)sender {
+	[self.tableView setEditing:NO animated:YES];
+	[self addButtons:self.tableView.editing];
 }
 
 @end

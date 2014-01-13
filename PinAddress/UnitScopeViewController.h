@@ -10,7 +10,7 @@
 
 #import "Unit.h"
 
-@interface UnitScopeViewController : UITableViewController<NSFetchedResultsControllerDelegate>
+@interface UnitScopeViewController : UIViewController<NSFetchedResultsControllerDelegate,UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic,strong) Unit * unit;
 

@@ -10,9 +10,14 @@
 
 #import "UnitScopeViewController.h"
 #import "EditingViewController.h"
-#import "SetGPSViewController.h"
+
+#import "AppDelegate.h"
 
 @interface UnitDetailViewController ()
+{
+    NSTimer *myTimer;
+}
+- (IBAction)setCurrentGPS:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 
@@ -65,17 +70,6 @@
     
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    
-    [super viewWillAppear:animated];
-    
-    // Redisplay the data.
-    [self updateInterface];
-    [self updateRightBarButtonItemState];
-}
-
-
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -113,37 +107,42 @@
 }
 
 - (void)updateInterface {
-    self.nameLabel.text=_unit.name;
-    self.latitudeLabel.text = [NSString stringWithFormat:@"%.6f",[_unit.latitude floatValue]];
-    self.longitudeLabel.text = [NSString stringWithFormat:@"%.6f",[_unit.longitude floatValue]];
-    self.scopeDetailLabel.text=[NSString stringWithFormat:@"%d",[_unit.scope count]];
+    self.nameLabel.text=self.unit.name;
+    self.latitudeLabel.text = [NSString stringWithFormat:@"%.6f",[self.unit.latitude floatValue]];
+    self.longitudeLabel.text = [NSString stringWithFormat:@"%.6f",[self.unit.longitude floatValue]];
+    self.scopeDetailLabel.text=[NSString stringWithFormat:@"%d",[self.unit.scope count]];
 }
 
 - (void)updateRightBarButtonItemState {
     
     // Conditionally enable the right bar button item -- it should only be enabled if the book is in a valid state for saving.
+
     self.navigationItem.rightBarButtonItem.enabled = [self.unit validateForUpdate:NULL];
+
 }
 
 #pragma mark - UITableViewDelegate
 - (NSIndexPath *)tableView:(UITableView *)tv willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     // Only allow selection if editing.
-    if (self.editing) {
-        return indexPath;
+    if (indexPath.section==0) {
+        if (self.editing) {
+            return indexPath;
+        }
+        return nil;
     }
-    return nil;
+    return indexPath;
 }
 
 /*
  Manage row selection: If a row is selected, create a new editing view controller to edit the property associated with the selected row.
  */
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    
-//    if (self.editing) {
-//        [self performSegueWithIdentifier:@"EditSelectedItem" sender:self];
-//    }
-//}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (self.editing && indexPath.section==0) {
+        [self performSegueWithIdentifier:@"EditSelectedItem" sender:self];
+    }
+}
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -231,6 +230,12 @@
     
     [super viewDidAppear:animated];
     [self becomeFirstResponder];
+    
+    myTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(onTimer) userInfo:nil repeats:YES];
+    
+    // Redisplay the data.
+    [self updateInterface];
+    [self updateRightBarButtonItemState];
 }
 
 
@@ -238,6 +243,8 @@
     
     [super viewWillDisappear:animated];
     [self resignFirstResponder];
+    
+    [myTimer invalidate];
 }
 
 
@@ -256,11 +263,6 @@
         controller.editedFieldName = NSLocalizedString(@"name", @"display name for title");
     }
     
-    if ([[segue identifier] isEqualToString:@"SetGPS"]) {
-        SetGPSViewController * setGPSViewController=(SetGPSViewController*)[segue destinationViewController];
-        setGPSViewController.unit=self.unit;
-    }
-    
     if ([[segue identifier] isEqualToString:@"ShowUnitScope"]) {
         UnitScopeViewController *unitScopeViewController=(UnitScopeViewController*)[segue destinationViewController];
         unitScopeViewController.unit=self.unit;
@@ -277,4 +279,26 @@
     [self updateInterface];
 }
 
+#pragma mark - set gps
+
+-(void)onTimer
+{
+    if (gLocation==nil)
+    {
+        return;
+    }
+    
+    self.currentLatLabel.text = [NSString stringWithFormat:@"%.6f",gLocation.coordinate.latitude];
+    self.currentLongLabel.text = [NSString stringWithFormat:@"%.6f",gLocation.coordinate.longitude];
+}
+
+- (IBAction)setCurrentGPS:(id)sender {
+    [undoManager setActionName:@"longitude"];
+    self.unit.longitude=[NSNumber numberWithFloat:gLocation.coordinate.longitude];
+    
+    [undoManager setActionName:@"latitude"];
+    self.unit.latitude=[NSNumber numberWithFloat:gLocation.coordinate.latitude];
+    
+    [self updateInterface];
+}
 @end
