@@ -1,0 +1,11 @@
+/* 
+  Localizable.strings
+  PinAddress
+
+  Created by Zhu Yu on 14-1-14.
+  Copyright (c) 2014年 hollysmart. All rights reserved.
+*/
+
+cancel="取消";
+take_photo_from_camera="照相";
+take_photo_from_library="从相册中选择";
