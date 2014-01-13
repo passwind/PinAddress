@@ -52,6 +52,7 @@
  */
 
 - (IBAction)save:(id)sender {
+    self.unit.createdAt=[NSDate date];
     [self.delegate addUnitViewController:self didFinishWithSave:YES];
 }
 - (IBAction)cancel:(id)sender {
