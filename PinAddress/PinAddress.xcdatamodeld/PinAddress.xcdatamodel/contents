@@ -1,9 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="Test1.xcdatamodel" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Event">
-        <attribute name="timeStamp" optional="YES" attributeType="Date"/>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3401" systemVersion="13B42" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Unit" representedClassName="Unit">
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <relationship name="scope" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="UnitScope" inverseName="unit" inverseEntity="UnitScope" syncable="YES"/>
+        <userInfo/>
+    </entity>
+    <entity name="UnitScope" representedClassName="UnitScope" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="unit" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Unit" inverseName="scope" inverseEntity="Unit" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Event" positionX="261" positionY="189" width="128" height="60"/>
+        <element name="Unit" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="UnitScope" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

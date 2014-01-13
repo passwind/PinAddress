@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E4238BBA1883D3BC00B98F7B /* EditingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4238BB91883D3BC00B98F7B /* EditingViewController.m */; };
+		E4238BBD1883E1D100B98F7B /* SetGPSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4238BBC1883E1D100B98F7B /* SetGPSViewController.m */; };
 		E438A9081880295C00678F84 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E438A9071880295C00678F84 /* Foundation.framework */; };
 		E438A90A1880295C00678F84 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E438A9091880295C00678F84 /* CoreGraphics.framework */; };
 		E438A90C1880295C00678F84 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E438A90B1880295C00678F84 /* UIKit.framework */; };
@@ -16,8 +18,6 @@
 		E438A91A1880295C00678F84 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E438A9191880295C00678F84 /* AppDelegate.m */; };
 		E438A91D1880295C00678F84 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E438A91B1880295C00678F84 /* Main.storyboard */; };
 		E438A9201880295C00678F84 /* PinAddress.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E438A91E1880295C00678F84 /* PinAddress.xcdatamodeld */; };
-		E438A9231880295C00678F84 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E438A9221880295C00678F84 /* MasterViewController.m */; };
-		E438A9261880295C00678F84 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E438A9251880295C00678F84 /* DetailViewController.m */; };
 		E438A9281880295C00678F84 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E438A9271880295C00678F84 /* Images.xcassets */; };
 		E438A92F1880295C00678F84 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E438A92E1880295C00678F84 /* XCTest.framework */; };
 		E438A9301880295C00678F84 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E438A9071880295C00678F84 /* Foundation.framework */; };
@@ -25,6 +25,14 @@
 		E438A9321880295C00678F84 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E438A90D1880295C00678F84 /* CoreData.framework */; };
 		E438A93A1880295C00678F84 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E438A9381880295C00678F84 /* InfoPlist.strings */; };
 		E438A93C1880295C00678F84 /* PinAddressTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E438A93B1880295C00678F84 /* PinAddressTests.m */; };
+		E438A9471880312B00678F84 /* UnitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E438A9461880312B00678F84 /* UnitViewController.m */; };
+		E438A94A1880317C00678F84 /* AddUnitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E438A9491880317C00678F84 /* AddUnitViewController.m */; };
+		E438A94D188031AA00678F84 /* UnitDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E438A94C188031AA00678F84 /* UnitDetailViewController.m */; };
+		E438A950188031F200678F84 /* UnitScopeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E438A94F188031F200678F84 /* UnitScopeViewController.m */; };
+		E438A9591880350200678F84 /* Unit.m in Sources */ = {isa = PBXBuildFile; fileRef = E438A9581880350200678F84 /* Unit.m */; };
+		E438A95C1880350300678F84 /* UnitScope.m in Sources */ = {isa = PBXBuildFile; fileRef = E438A95B1880350300678F84 /* UnitScope.m */; };
+		E438A95E1880405600678F84 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E438A95D1880405600678F84 /* CoreLocation.framework */; };
+		E438A96118804D8800678F84 /* UnitScopeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E438A96018804D8800678F84 /* UnitScopeCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +46,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E4238BB81883D3BC00B98F7B /* EditingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditingViewController.h; sourceTree = "<group>"; };
+		E4238BB91883D3BC00B98F7B /* EditingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditingViewController.m; sourceTree = "<group>"; };
+		E4238BBB1883E1D100B98F7B /* SetGPSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetGPSViewController.h; sourceTree = "<group>"; };
+		E4238BBC1883E1D100B98F7B /* SetGPSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetGPSViewController.m; sourceTree = "<group>"; };
 		E438A9041880295C00678F84 /* PinAddress.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PinAddress.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E438A9071880295C00678F84 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E438A9091880295C00678F84 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -51,16 +63,27 @@
 		E438A9191880295C00678F84 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		E438A91C1880295C00678F84 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E438A91F1880295C00678F84 /* PinAddress.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PinAddress.xcdatamodel; sourceTree = "<group>"; };
-		E438A9211880295C00678F84 /* MasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
-		E438A9221880295C00678F84 /* MasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
-		E438A9241880295C00678F84 /* DetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
-		E438A9251880295C00678F84 /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		E438A9271880295C00678F84 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E438A92D1880295C00678F84 /* PinAddressTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PinAddressTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E438A92E1880295C00678F84 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		E438A9371880295C00678F84 /* PinAddressTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PinAddressTests-Info.plist"; sourceTree = "<group>"; };
 		E438A9391880295C00678F84 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E438A93B1880295C00678F84 /* PinAddressTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PinAddressTests.m; sourceTree = "<group>"; };
+		E438A9451880312B00678F84 /* UnitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnitViewController.h; sourceTree = "<group>"; };
+		E438A9461880312B00678F84 /* UnitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnitViewController.m; sourceTree = "<group>"; };
+		E438A9481880317C00678F84 /* AddUnitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddUnitViewController.h; sourceTree = "<group>"; };
+		E438A9491880317C00678F84 /* AddUnitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddUnitViewController.m; sourceTree = "<group>"; };
+		E438A94B188031AA00678F84 /* UnitDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnitDetailViewController.h; sourceTree = "<group>"; };
+		E438A94C188031AA00678F84 /* UnitDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnitDetailViewController.m; sourceTree = "<group>"; };
+		E438A94E188031F200678F84 /* UnitScopeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnitScopeViewController.h; sourceTree = "<group>"; };
+		E438A94F188031F200678F84 /* UnitScopeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnitScopeViewController.m; sourceTree = "<group>"; };
+		E438A9571880350200678F84 /* Unit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Unit.h; sourceTree = "<group>"; };
+		E438A9581880350200678F84 /* Unit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Unit.m; sourceTree = "<group>"; };
+		E438A95A1880350300678F84 /* UnitScope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnitScope.h; sourceTree = "<group>"; };
+		E438A95B1880350300678F84 /* UnitScope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnitScope.m; sourceTree = "<group>"; };
+		E438A95D1880405600678F84 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		E438A95F18804D8800678F84 /* UnitScopeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnitScopeCell.h; sourceTree = "<group>"; };
+		E438A96018804D8800678F84 /* UnitScopeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnitScopeCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +91,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E438A95E1880405600678F84 /* CoreLocation.framework in Frameworks */,
 				E438A90A1880295C00678F84 /* CoreGraphics.framework in Frameworks */,
 				E438A90E1880295C00678F84 /* CoreData.framework in Frameworks */,
 				E438A90C1880295C00678F84 /* UIKit.framework in Frameworks */,
@@ -111,6 +135,7 @@
 		E438A9061880295C00678F84 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E438A95D1880405600678F84 /* CoreLocation.framework */,
 				E438A9071880295C00678F84 /* Foundation.framework */,
 				E438A9091880295C00678F84 /* CoreGraphics.framework */,
 				E438A90B1880295C00678F84 /* UIKit.framework */,
@@ -123,16 +148,30 @@
 		E438A90F1880295C00678F84 /* PinAddress */ = {
 			isa = PBXGroup;
 			children = (
+				E4238BB81883D3BC00B98F7B /* EditingViewController.h */,
+				E4238BB91883D3BC00B98F7B /* EditingViewController.m */,
 				E438A9181880295C00678F84 /* AppDelegate.h */,
 				E438A9191880295C00678F84 /* AppDelegate.m */,
 				E438A91B1880295C00678F84 /* Main.storyboard */,
-				E438A9211880295C00678F84 /* MasterViewController.h */,
-				E438A9221880295C00678F84 /* MasterViewController.m */,
-				E438A9241880295C00678F84 /* DetailViewController.h */,
-				E438A9251880295C00678F84 /* DetailViewController.m */,
 				E438A9271880295C00678F84 /* Images.xcassets */,
 				E438A91E1880295C00678F84 /* PinAddress.xcdatamodeld */,
 				E438A9101880295C00678F84 /* Supporting Files */,
+				E438A9451880312B00678F84 /* UnitViewController.h */,
+				E438A9461880312B00678F84 /* UnitViewController.m */,
+				E438A9481880317C00678F84 /* AddUnitViewController.h */,
+				E438A9491880317C00678F84 /* AddUnitViewController.m */,
+				E438A94B188031AA00678F84 /* UnitDetailViewController.h */,
+				E438A94C188031AA00678F84 /* UnitDetailViewController.m */,
+				E438A94E188031F200678F84 /* UnitScopeViewController.h */,
+				E438A94F188031F200678F84 /* UnitScopeViewController.m */,
+				E438A9571880350200678F84 /* Unit.h */,
+				E438A9581880350200678F84 /* Unit.m */,
+				E438A95A1880350300678F84 /* UnitScope.h */,
+				E438A95B1880350300678F84 /* UnitScope.m */,
+				E438A95F18804D8800678F84 /* UnitScopeCell.h */,
+				E438A96018804D8800678F84 /* UnitScopeCell.m */,
+				E4238BBB1883E1D100B98F7B /* SetGPSViewController.h */,
+				E4238BBC1883E1D100B98F7B /* SetGPSViewController.m */,
 			);
 			path = PinAddress;
 			sourceTree = "<group>";
@@ -263,11 +302,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E438A9261880295C00678F84 /* DetailViewController.m in Sources */,
-				E438A9231880295C00678F84 /* MasterViewController.m in Sources */,
+				E438A9591880350200678F84 /* Unit.m in Sources */,
+				E438A94A1880317C00678F84 /* AddUnitViewController.m in Sources */,
+				E4238BBD1883E1D100B98F7B /* SetGPSViewController.m in Sources */,
 				E438A9201880295C00678F84 /* PinAddress.xcdatamodeld in Sources */,
+				E4238BBA1883D3BC00B98F7B /* EditingViewController.m in Sources */,
 				E438A91A1880295C00678F84 /* AppDelegate.m in Sources */,
+				E438A950188031F200678F84 /* UnitScopeViewController.m in Sources */,
+				E438A94D188031AA00678F84 /* UnitDetailViewController.m in Sources */,
+				E438A96118804D8800678F84 /* UnitScopeCell.m in Sources */,
+				E438A9471880312B00678F84 /* UnitViewController.m in Sources */,
 				E438A9161880295C00678F84 /* main.m in Sources */,
+				E438A95C1880350300678F84 /* UnitScope.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,7 +396,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -383,7 +429,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -476,6 +522,7 @@
 				E438A9411880295C00678F84 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E438A9421880295C00678F84 /* Build configuration list for PBXNativeTarget "PinAddressTests" */ = {
 			isa = XCConfigurationList;
@@ -484,6 +531,7 @@
 				E438A9441880295C00678F84 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

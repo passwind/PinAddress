@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 
-#import "MasterViewController.h"
+#import "UnitViewController.h"
 
 @implementation AppDelegate
 
@@ -20,8 +20,15 @@
 {
     // Override point for customization after application launch.
     UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
-    MasterViewController *controller = (MasterViewController *)navigationController.topViewController;
+    UnitViewController *controller = (UnitViewController *)navigationController.topViewController;
     controller.managedObjectContext = self.managedObjectContext;
+    
+    //Init locationManager
+	gLocationManager = [[CLLocationManager alloc] init];
+	gLocationManager.delegate = self;
+	gLocationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
+    [gLocationManager startUpdatingLocation];
+    
     return YES;
 }
 							
@@ -79,7 +86,7 @@
     
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     if (coordinator != nil) {
-        _managedObjectContext = [[NSManagedObjectContext alloc] init];
+        _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
         [_managedObjectContext setPersistentStoreCoordinator:coordinator];
     }
     return _managedObjectContext;
@@ -147,5 +154,35 @@
 {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
+
+#pragma mark - CoreLocation Delegate
+//收到新的GPS位置
+-(void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+{
+    //舍弃无效和精度太差的数据
+    if (newLocation.horizontalAccuracy < 0 || newLocation.horizontalAccuracy > 2000) return;
+    
+    //舍弃缓存中过老的数据
+    NSTimeInterval newLocationAge = -[newLocation.timestamp timeIntervalSinceNow];
+    if (newLocationAge > 10.0) return;
+    
+    //舍弃漂移的数据
+    NSTimeInterval oldLocationAge = -[oldLocation.timestamp timeIntervalSinceNow];
+    //两次定位相差5秒以内
+    if (oldLocationAge - newLocationAge < 10)
+    {
+        CLLocationDistance distance = [newLocation distanceFromLocation:oldLocation];
+        //漂移量过大，舍弃
+        if (distance > 500)
+        {
+            return;
+        }
+    }
+    
+	//update Global location var with newLocation
+	gLocation = newLocation;
+//    NSLog(@"Old=>%f,%f New=>%f,%f",oldLocation.coordinate.latitude,oldLocation.coordinate.longitude,newLocation.coordinate.latitude,newLocation.coordinate.longitude);
+}
+
 
 @end
