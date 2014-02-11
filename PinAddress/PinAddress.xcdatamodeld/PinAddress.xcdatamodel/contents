@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3401" systemVersion="13B42" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Site" representedClassName="Site" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="units" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Unit" inverseName="site" inverseEntity="Unit" syncable="YES"/>
+    </entity>
     <entity name="Unit" representedClassName="Unit">
         <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="latitude" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
@@ -9,6 +14,7 @@
         </attribute>
         <relationship name="photo" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="UnitPhoto" inverseName="unit" inverseEntity="UnitPhoto" syncable="YES"/>
         <relationship name="scope" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="UnitScope" inverseName="unit" inverseEntity="UnitScope" syncable="YES"/>
+        <relationship name="site" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="units" inverseEntity="Site" syncable="YES"/>
         <userInfo/>
     </entity>
     <entity name="UnitPhoto" representedClassName="UnitPhoto" syncable="YES">
@@ -23,8 +29,9 @@
         <relationship name="unit" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Unit" inverseName="scope" inverseEntity="Unit" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Unit" positionX="0" positionY="0" width="128" height="120"/>
-        <element name="UnitScope" positionX="0" positionY="0" width="128" height="103"/>
+        <element name="Site" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Unit" positionX="0" positionY="0" width="0" height="0"/>
         <element name="UnitPhoto" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="UnitScope" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

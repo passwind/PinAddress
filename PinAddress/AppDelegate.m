@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 
-#import "UnitViewController.h"
+#import "SiteViewController.h"
 
 @implementation AppDelegate
 
@@ -20,7 +20,7 @@
 {
     // Override point for customization after application launch.
     UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
-    UnitViewController *controller = (UnitViewController *)navigationController.topViewController;
+    SiteViewController *controller = (SiteViewController *)navigationController.topViewController;
     controller.managedObjectContext = self.managedObjectContext;
     
     //Init locationManager
