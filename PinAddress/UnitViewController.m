@@ -16,9 +16,13 @@
 #import "UnitDetailViewController.h"
 #import "ZipArchive.h"
 
-@interface UnitViewController ()<AddUnitViewControllerDelegate>
+#import "tools.h"
 
-//@property (nonatomic, strong) UIBarButtonItem *rightBarButtonItem;
+@interface UnitViewController ()<AddUnitViewControllerDelegate>
+{
+    dispatch_queue_t backgroundQueue;
+}
+
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic,strong) Unit * addingUnit;
 - (IBAction)export:(id)sender;
@@ -56,6 +60,8 @@
 {
     [super viewDidLoad];
 
+    backgroundQueue=dispatch_queue_create("com.hollysmart.pickaddress.bgqueue", NULL);
+    
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     self.title=_site.name;
     
@@ -239,7 +245,8 @@
 }
 
 
-- (IBAction)export:(id)sender {
+-(void)exportData
+{
     NSDateFormatter * df=[[NSDateFormatter alloc] init];
     [df setDateFormat:@"yyyyMMddHHmmss"];
     [df setTimeZone:[NSTimeZone localTimeZone]];
@@ -248,7 +255,8 @@
     NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString* documentsDirectory = [paths objectAtIndex:0];
     
-    NSString* zipFile = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@.zip",_site.name,prefix]];
+    NSString * zf=[NSString stringWithFormat:@"%@_%@.zip",_site.name,prefix];
+    NSString* zipFile = [documentsDirectory stringByAppendingPathComponent:zf];
     
     [df setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     
@@ -279,9 +287,11 @@
             
             NSDictionary * photoDic=[NSDictionary dictionaryWithObjectsAndKeys:filename,@"filename",[df stringFromDate:photo.createdAt],@"createdAt", nil];
             [photoArray addObject:photoDic];
-            [za addFileToZip:photo.localSrc newname:[NSString stringWithFormat:@"%@/%@",[df stringFromDate:[NSDate date]],filename]];
+            [za addFileToZip:photo.localSrc newname:[NSString stringWithFormat:@"%@/%@",prefix,filename]];
         }];
         [unitDic setObject:photoArray forKey:@"photo"];
+        
+        [unitArray addObject:unitDic];
     }];
     
     [siteDic setObject:unitArray forKey:@"unit"];
@@ -301,6 +311,17 @@
     
     [za CloseZipFile2];
     
-    NSLog(@"ok:%@",zipFile);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [tools removeHUD];
+        [tools showTextOnly:self text:[NSString stringWithFormat:@"成功导出，请通过iTunes获取文件"]];
+    });
+}
+
+- (IBAction)export:(id)sender {
+    [tools showHUD:@"正在导出..."];
+    
+    dispatch_async(backgroundQueue, ^{
+        [self exportData];
+    });
 }
 @end

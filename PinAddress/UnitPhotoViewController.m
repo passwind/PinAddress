@@ -10,6 +10,7 @@
 #import "Unit.h"
 #import "UnitPhoto.h"
 #import "UnitPhotoCell.h"
+#import "UIImage+fixOrientation.h"
 
 @interface UnitPhotoViewController ()
 
@@ -101,7 +102,9 @@
 -(void)configureCell:(UnitPhotoCell*)cell atIndexPath:(NSIndexPath*)indexPath
 {
     UnitPhoto * info=[_fetchedResultsController objectAtIndexPath:indexPath];
-    cell.imageView.image=[UIImage imageWithContentsOfFile:info.localSrc];
+    UIImage * image=[UIImage imageWithContentsOfFile:info.localSrc];
+    
+    cell.imageView.image=image;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -272,7 +275,8 @@
 {
 	[picker dismissViewControllerAnimated:YES completion:nil];
     
-    NSData* imageData = UIImagePNGRepresentation([info objectForKey:UIImagePickerControllerOriginalImage]);
+    UIImage * image=[info objectForKey:UIImagePickerControllerOriginalImage];
+    NSData* imageData = UIImagePNGRepresentation([image fixOrientation]);
     
     // Give a name to the file
     NSString* imageName = [NSString stringWithFormat:@"%f.png",[[NSDate date] timeIntervalSinceReferenceDate]];

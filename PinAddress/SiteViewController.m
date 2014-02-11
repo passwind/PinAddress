@@ -91,7 +91,7 @@
 -(void)configureCell:(UITableViewCell*)cell atIndexPath:(NSIndexPath*)indexPath
 {
     Site * info=[_fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text=info.name;
+    cell.textLabel.text=[NSString stringWithFormat:@"%@ (%d)",info.name,[info.units count]];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

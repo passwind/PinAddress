@@ -45,6 +45,10 @@
 		E492077018A9EA3F00AF4F1D /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = E492076918A9EA3F00AF4F1D /* zip.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E492077118A9EA3F00AF4F1D /* ZipArchive.mm in Sources */ = {isa = PBXBuildFile; fileRef = E492076C18A9EA3F00AF4F1D /* ZipArchive.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E492077518A9F3E900AF4F1D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E492077418A9F3E900AF4F1D /* libz.dylib */; };
+		E492077818AA0AB100AF4F1D /* tools.m in Sources */ = {isa = PBXBuildFile; fileRef = E492077718AA0AB100AF4F1D /* tools.m */; };
+		E492077B18AA0B2400AF4F1D /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = E492077A18AA0B2400AF4F1D /* Reachability.m */; };
+		E492077E18AA0B3D00AF4F1D /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = E492077D18AA0B3D00AF4F1D /* MBProgressHUD.m */; };
+		E492078118AA124900AF4F1D /* UIImage+fixOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = E492078018AA124900AF4F1D /* UIImage+fixOrientation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,6 +126,14 @@
 		E492076B18A9EA3F00AF4F1D /* ZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipArchive.h; sourceTree = "<group>"; };
 		E492076C18A9EA3F00AF4F1D /* ZipArchive.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ZipArchive.mm; sourceTree = "<group>"; };
 		E492077418A9F3E900AF4F1D /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		E492077618AA0AB100AF4F1D /* tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tools.h; sourceTree = "<group>"; };
+		E492077718AA0AB100AF4F1D /* tools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = tools.m; sourceTree = "<group>"; };
+		E492077918AA0B2400AF4F1D /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		E492077A18AA0B2400AF4F1D /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		E492077C18AA0B3D00AF4F1D /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		E492077D18AA0B3D00AF4F1D /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		E492077F18AA124900AF4F1D /* UIImage+fixOrientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+fixOrientation.h"; sourceTree = "<group>"; };
+		E492078018AA124900AF4F1D /* UIImage+fixOrientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+fixOrientation.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +200,12 @@
 		E438A90F1880295C00678F84 /* PinAddress */ = {
 			isa = PBXGroup;
 			children = (
+				E492077C18AA0B3D00AF4F1D /* MBProgressHUD.h */,
+				E492077D18AA0B3D00AF4F1D /* MBProgressHUD.m */,
+				E492077918AA0B2400AF4F1D /* Reachability.h */,
+				E492077A18AA0B2400AF4F1D /* Reachability.m */,
+				E492077618AA0AB100AF4F1D /* tools.h */,
+				E492077718AA0AB100AF4F1D /* tools.m */,
 				E492076018A9EA3F00AF4F1D /* ZipArchive */,
 				E4238BB81883D3BC00B98F7B /* EditingViewController.h */,
 				E4238BB91883D3BC00B98F7B /* EditingViewController.m */,
@@ -223,6 +241,8 @@
 				E492075B18A9D3D000AF4F1D /* Site.m */,
 				E492075D18A9D52500AF4F1D /* Unit.h */,
 				E492075E18A9D52500AF4F1D /* Unit.m */,
+				E492077F18AA124900AF4F1D /* UIImage+fixOrientation.h */,
+				E492078018AA124900AF4F1D /* UIImage+fixOrientation.m */,
 			);
 			path = PinAddress;
 			sourceTree = "<group>";
@@ -384,19 +404,23 @@
 			files = (
 				E438A94A1880317C00678F84 /* AddUnitViewController.m in Sources */,
 				E492073B18A9C47000AF4F1D /* SiteDetailViewController.m in Sources */,
+				E492077818AA0AB100AF4F1D /* tools.m in Sources */,
 				E438A9201880295C00678F84 /* PinAddress.xcdatamodeld in Sources */,
 				E492076E18A9EA3F00AF4F1D /* mztools.c in Sources */,
 				E492073818A9C43200AF4F1D /* SiteViewController.m in Sources */,
 				E4238BBA1883D3BC00B98F7B /* EditingViewController.m in Sources */,
 				E492076F18A9EA3F00AF4F1D /* unzip.c in Sources */,
+				E492078118AA124900AF4F1D /* UIImage+fixOrientation.m in Sources */,
 				E492075F18A9D52500AF4F1D /* Unit.m in Sources */,
 				E492076D18A9EA3F00AF4F1D /* ioapi.c in Sources */,
+				E492077B18AA0B2400AF4F1D /* Reachability.m in Sources */,
 				E438A91A1880295C00678F84 /* AppDelegate.m in Sources */,
 				E4238BCE188492C900B98F7B /* UnitPhoto.m in Sources */,
 				E438A950188031F200678F84 /* UnitScopeViewController.m in Sources */,
 				E4238BC818848EEC00B98F7B /* UnitPhotoViewController.m in Sources */,
 				E438A94D188031AA00678F84 /* UnitDetailViewController.m in Sources */,
 				E492077118A9EA3F00AF4F1D /* ZipArchive.mm in Sources */,
+				E492077E18AA0B3D00AF4F1D /* MBProgressHUD.m in Sources */,
 				E438A96118804D8800678F84 /* UnitScopeCell.m in Sources */,
 				E438A9471880312B00678F84 /* UnitViewController.m in Sources */,
 				E492075C18A9D3D000AF4F1D /* Site.m in Sources */,
