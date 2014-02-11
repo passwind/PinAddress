@@ -11,6 +11,7 @@
 #import "UnitPhoto.h"
 #import "UnitPhotoCell.h"
 #import "UIImage+fixOrientation.h"
+#import "UIImage+IF.h"
 
 @interface UnitPhotoViewController ()
 
@@ -102,7 +103,7 @@
 -(void)configureCell:(UnitPhotoCell*)cell atIndexPath:(NSIndexPath*)indexPath
 {
     UnitPhoto * info=[_fetchedResultsController objectAtIndexPath:indexPath];
-    UIImage * image=[UIImage imageWithContentsOfFile:info.localSrc];
+    UIImage * image=[UIImage imageWithData:info.thumb];
     
     cell.imageView.image=image;
 }
@@ -269,6 +270,37 @@
     [choosePhotoActionSheet showInView:self.view];
 }
 
+-(NSData*)makeThumbImage:(UIImage*)origImage
+{
+    UIImage * rotateImage=[origImage fixOrientation];
+    CGSize newSize;
+    CGFloat origWidth=rotateImage.size.width;
+    CGFloat origHeight=rotateImage.size.height;
+    if (origWidth>origHeight) {
+        if (origHeight/origWidth>460/320) {
+            newSize.width=320;
+            newSize.height=origHeight*newSize.width/origWidth;
+        }
+        else{
+            newSize.height=460;
+            newSize.width=origWidth*newSize.height/origHeight;
+        }
+    }
+    else{
+        if (origHeight/origWidth>320/460) {
+            newSize.width=460;
+            newSize.height=origHeight*newSize.width/origWidth;
+        }
+        else{
+            newSize.height=320;
+            newSize.width=origWidth*newSize.height/origHeight;
+        }
+    }
+    UIImage * image=[rotateImage resizedImage:newSize interpolationQuality:kCGInterpolationHigh];
+    
+    return UIImageJPEGRepresentation(image, 0.7);
+}
+
 #pragma mark - UIImagePickerControllerDelegate
 //得到图片信息
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
@@ -296,7 +328,7 @@
     UnitPhoto * newPhoto=[NSEntityDescription insertNewObjectForEntityForName:@"UnitPhoto" inManagedObjectContext:self.managedObjectContext];
     newPhoto.createdAt=[NSDate date];
     newPhoto.localSrc=fullPathToFile;
-    
+    newPhoto.thumb=[self makeThumbImage:image];
     newPhoto.unit=_unit;
     
     [_unit addPhotoObject:newPhoto];

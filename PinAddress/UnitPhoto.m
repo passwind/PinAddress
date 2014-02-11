@@ -2,7 +2,7 @@
 //  UnitPhoto.m
 //  PinAddress
 //
-//  Created by Zhu Yu on 14-1-14.
+//  Created by Zhu Yu on 14-2-11.
 //  Copyright (c) 2014年 hollysmart. All rights reserved.
 //
 
@@ -12,8 +12,9 @@
 
 @implementation UnitPhoto
 
-@dynamic localSrc;
 @dynamic createdAt;
+@dynamic localSrc;
+@dynamic thumb;
 @dynamic unit;
 
 @end

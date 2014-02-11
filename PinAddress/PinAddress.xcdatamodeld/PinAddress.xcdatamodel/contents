@@ -20,6 +20,7 @@
     <entity name="UnitPhoto" representedClassName="UnitPhoto" syncable="YES">
         <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="localSrc" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="thumb" optional="YES" attributeType="Binary" syncable="YES"/>
         <relationship name="unit" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Unit" inverseName="photo" inverseEntity="Unit" syncable="YES"/>
     </entity>
     <entity name="UnitScope" representedClassName="UnitScope" syncable="YES">

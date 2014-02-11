@@ -10,7 +10,6 @@
 		E4238BBA1883D3BC00B98F7B /* EditingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4238BB91883D3BC00B98F7B /* EditingViewController.m */; };
 		E4238BC818848EEC00B98F7B /* UnitPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4238BC718848EEC00B98F7B /* UnitPhotoViewController.m */; };
 		E4238BCB18848F0600B98F7B /* UnitPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E4238BCA18848F0600B98F7B /* UnitPhotoCell.m */; };
-		E4238BCE188492C900B98F7B /* UnitPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = E4238BCD188492C900B98F7B /* UnitPhoto.m */; };
 		E4238BD518849CCB00B98F7B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E4238BD718849CCB00B98F7B /* Localizable.strings */; };
 		E438A9081880295C00678F84 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E438A9071880295C00678F84 /* Foundation.framework */; };
 		E438A90A1880295C00678F84 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E438A9091880295C00678F84 /* CoreGraphics.framework */; };
@@ -49,6 +48,8 @@
 		E492077B18AA0B2400AF4F1D /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = E492077A18AA0B2400AF4F1D /* Reachability.m */; };
 		E492077E18AA0B3D00AF4F1D /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = E492077D18AA0B3D00AF4F1D /* MBProgressHUD.m */; };
 		E492078118AA124900AF4F1D /* UIImage+fixOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = E492078018AA124900AF4F1D /* UIImage+fixOrientation.m */; };
+		E492078418AA173000AF4F1D /* UIImage+IF.m in Sources */ = {isa = PBXBuildFile; fileRef = E492078318AA173000AF4F1D /* UIImage+IF.m */; };
+		E492078718AA176A00AF4F1D /* UnitPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = E492078618AA176A00AF4F1D /* UnitPhoto.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,8 +69,6 @@
 		E4238BC718848EEC00B98F7B /* UnitPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnitPhotoViewController.m; sourceTree = "<group>"; };
 		E4238BC918848F0600B98F7B /* UnitPhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnitPhotoCell.h; sourceTree = "<group>"; };
 		E4238BCA18848F0600B98F7B /* UnitPhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnitPhotoCell.m; sourceTree = "<group>"; };
-		E4238BCC188492C900B98F7B /* UnitPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnitPhoto.h; sourceTree = "<group>"; };
-		E4238BCD188492C900B98F7B /* UnitPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnitPhoto.m; sourceTree = "<group>"; };
 		E4238BD118849B7D00B98F7B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		E4238BD218849B7D00B98F7B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		E4238BD618849CCB00B98F7B /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -134,6 +133,10 @@
 		E492077D18AA0B3D00AF4F1D /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		E492077F18AA124900AF4F1D /* UIImage+fixOrientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+fixOrientation.h"; sourceTree = "<group>"; };
 		E492078018AA124900AF4F1D /* UIImage+fixOrientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+fixOrientation.m"; sourceTree = "<group>"; };
+		E492078218AA173000AF4F1D /* UIImage+IF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+IF.h"; sourceTree = "<group>"; };
+		E492078318AA173000AF4F1D /* UIImage+IF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+IF.m"; sourceTree = "<group>"; };
+		E492078518AA176A00AF4F1D /* UnitPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnitPhoto.h; sourceTree = "<group>"; };
+		E492078618AA176A00AF4F1D /* UnitPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnitPhoto.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +207,8 @@
 				E492077D18AA0B3D00AF4F1D /* MBProgressHUD.m */,
 				E492077918AA0B2400AF4F1D /* Reachability.h */,
 				E492077A18AA0B2400AF4F1D /* Reachability.m */,
+				E492078218AA173000AF4F1D /* UIImage+IF.h */,
+				E492078318AA173000AF4F1D /* UIImage+IF.m */,
 				E492077618AA0AB100AF4F1D /* tools.h */,
 				E492077718AA0AB100AF4F1D /* tools.m */,
 				E492076018A9EA3F00AF4F1D /* ZipArchive */,
@@ -231,8 +236,6 @@
 				E4238BC718848EEC00B98F7B /* UnitPhotoViewController.m */,
 				E4238BC918848F0600B98F7B /* UnitPhotoCell.h */,
 				E4238BCA18848F0600B98F7B /* UnitPhotoCell.m */,
-				E4238BCC188492C900B98F7B /* UnitPhoto.h */,
-				E4238BCD188492C900B98F7B /* UnitPhoto.m */,
 				E492073618A9C43100AF4F1D /* SiteViewController.h */,
 				E492073718A9C43100AF4F1D /* SiteViewController.m */,
 				E492073918A9C47000AF4F1D /* SiteDetailViewController.h */,
@@ -243,6 +246,8 @@
 				E492075E18A9D52500AF4F1D /* Unit.m */,
 				E492077F18AA124900AF4F1D /* UIImage+fixOrientation.h */,
 				E492078018AA124900AF4F1D /* UIImage+fixOrientation.m */,
+				E492078518AA176A00AF4F1D /* UnitPhoto.h */,
+				E492078618AA176A00AF4F1D /* UnitPhoto.m */,
 			);
 			path = PinAddress;
 			sourceTree = "<group>";
@@ -412,10 +417,11 @@
 				E492076F18A9EA3F00AF4F1D /* unzip.c in Sources */,
 				E492078118AA124900AF4F1D /* UIImage+fixOrientation.m in Sources */,
 				E492075F18A9D52500AF4F1D /* Unit.m in Sources */,
+				E492078418AA173000AF4F1D /* UIImage+IF.m in Sources */,
 				E492076D18A9EA3F00AF4F1D /* ioapi.c in Sources */,
 				E492077B18AA0B2400AF4F1D /* Reachability.m in Sources */,
 				E438A91A1880295C00678F84 /* AppDelegate.m in Sources */,
-				E4238BCE188492C900B98F7B /* UnitPhoto.m in Sources */,
+				E492078718AA176A00AF4F1D /* UnitPhoto.m in Sources */,
 				E438A950188031F200678F84 /* UnitScopeViewController.m in Sources */,
 				E4238BC818848EEC00B98F7B /* UnitPhotoViewController.m in Sources */,
 				E438A94D188031AA00678F84 /* UnitDetailViewController.m in Sources */,

@@ -2,7 +2,7 @@
 //  UnitPhoto.h
 //  PinAddress
 //
-//  Created by Zhu Yu on 14-1-14.
+//  Created by Zhu Yu on 14-2-11.
 //  Copyright (c) 2014年 hollysmart. All rights reserved.
 //
 
@@ -13,8 +13,9 @@
 
 @interface UnitPhoto : NSManagedObject
 
-@property (nonatomic, retain) NSString * localSrc;
 @property (nonatomic, retain) NSDate * createdAt;
+@property (nonatomic, retain) NSString * localSrc;
+@property (nonatomic, retain) NSData * thumb;
 @property (nonatomic, retain) Unit *unit;
 
 @end
