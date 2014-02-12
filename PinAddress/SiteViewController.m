@@ -213,14 +213,14 @@
     }
     
     if([segue.identifier isEqualToString:@"ShowSiteDetail"]){
-        NSIndexPath * indexPath=[self.tableView indexPathForSelectedRow];
+        NSIndexPath * indexPath=[self.tableView indexPathForCell:sender];
         Site * selectedSite=(Site*)[_fetchedResultsController objectAtIndexPath:indexPath];
         
         UnitViewController * unitViewController=[segue destinationViewController];
         
         unitViewController.site=selectedSite;
         
-        unitViewController.managedObjectContext=selectedSite.managedObjectContext;
+        unitViewController.managedObjectContext=self.managedObjectContext;
     }
 }
 
