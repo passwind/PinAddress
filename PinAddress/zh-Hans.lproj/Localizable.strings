@@ -9,3 +9,4 @@
 cancel="取消";
 take_photo_from_camera="照相";
 take_photo_from_library="从相册中选择";
+name="名称";

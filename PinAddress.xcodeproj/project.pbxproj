@@ -355,6 +355,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = hollysmart;
 				TargetAttributes = {
+					E438A9031880295C00678F84 = {
+						DevelopmentTeam = 5US94TNYM6;
+					};
 					E438A92C1880295C00678F84 = {
 						TestTargetID = E438A9031880295C00678F84;
 					};
@@ -571,10 +574,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PinAddress/PinAddress-Prefix.pch";
 				INFOPLIST_FILE = "PinAddress/PinAddress-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -584,10 +590,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PinAddress/PinAddress-Prefix.pch";
 				INFOPLIST_FILE = "PinAddress/PinAddress-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
