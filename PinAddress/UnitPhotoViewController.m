@@ -161,8 +161,6 @@
     UnitPhoto * newPhoto=[NSEntityDescription insertNewObjectForEntityForName:@"UnitPhoto" inManagedObjectContext:self.managedObjectContext];
     newPhoto.createdAt=[NSDate date];
     newPhoto.localSrc=fullPathToFile;
-
-    NSIndexPath * indexPath=[NSIndexPath indexPathForRow:[_unit.photo count] inSection:0];
     newPhoto.unit=_unit;
     
     [_unit addPhotoObject:newPhoto];
@@ -174,6 +172,7 @@
         abort();
     }
     
+    NSIndexPath * indexPath=[NSIndexPath indexPathForRow:[_unit.photo count]-1 inSection:0];
     [_collectionView insertItemsAtIndexPaths:@[indexPath]];
 
     dispatch_async(_imageProcessQueue, ^{
