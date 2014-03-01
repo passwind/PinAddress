@@ -693,7 +693,7 @@
                                 <action selector="cancel:" destination="cIa-bt-169" id="c9p-17-aV2"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Save" style="done" id="nOy-cW-SqV">
+                        <barButtonItem key="rightBarButtonItem" title="保存" style="done" id="nOy-cW-SqV">
                             <connections>
                                 <action selector="save:" destination="cIa-bt-169" id="drU-JU-Vm0"/>
                             </connections>
