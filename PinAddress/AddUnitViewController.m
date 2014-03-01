@@ -29,7 +29,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setUpUndoManager];
     self.editing=YES;
 }
 

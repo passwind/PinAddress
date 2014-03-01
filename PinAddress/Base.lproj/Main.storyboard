@@ -292,6 +292,9 @@
                                                     <state key="normal" title="设置当前坐标">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="setCurrentGPS:" destination="bqY-4f-mFS" eventType="touchUpInside" id="hrQ-Bt-HVv"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </tableViewCellContentView>

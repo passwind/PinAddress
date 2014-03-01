@@ -29,15 +29,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *scopeDetailLabel;
 @property (weak, nonatomic) IBOutlet UILabel *photoDetailLabel;
 
-@property (nonatomic, strong) NSUndoManager *undoManager;
-
 - (void)updateInterface;
 - (void)updateRightBarButtonItemState;
 
 @end
 
 @implementation UnitDetailViewController
-@synthesize undoManager;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -90,10 +87,10 @@
      When editing ends, de-register from the notification center and remove the undo manager, and save the changes.
      */
     if (editing) {
-        [self setUpUndoManager];
+
     }
     else {
-        [self cleanUpUndoManager];
+
         // Save the changes.
         NSError *error;
         if (![self.unit.managedObjectContext save:&error]) {
@@ -157,69 +154,6 @@
     
     return NO;
 }
-
-#pragma mark - Undo support
-
-- (void)setUpUndoManager {
-    
-    /*
-     If the book's managed object context doesn't already have an undo manager, then create one and set it for the context and self.
-     The view controller needs to keep a reference to the undo manager it creates so that it can determine whether to remove the undo manager when editing finishes.
-     */
-    if (self.unit.managedObjectContext.undoManager == nil) {
-        
-        NSUndoManager *anUndoManager = [[NSUndoManager alloc] init];
-        [anUndoManager setLevelsOfUndo:3];
-        self.undoManager = anUndoManager;
-        
-        self.unit.managedObjectContext.undoManager = self.undoManager;
-    }
-    
-    // Register as an observer of the book's context's undo manager.
-    NSUndoManager *bookUndoManager = self.unit.managedObjectContext.undoManager;
-    
-    NSNotificationCenter *dnc = [NSNotificationCenter defaultCenter];
-    [dnc addObserver:self selector:@selector(undoManagerDidUndo:) name:NSUndoManagerDidUndoChangeNotification object:bookUndoManager];
-    [dnc addObserver:self selector:@selector(undoManagerDidRedo:) name:NSUndoManagerDidRedoChangeNotification object:bookUndoManager];
-}
-
-
-- (void)cleanUpUndoManager {
-    
-    // Remove self as an observer.
-    NSUndoManager *bookUndoManager = self.unit.managedObjectContext.undoManager;
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUndoManagerDidUndoChangeNotification object:bookUndoManager];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUndoManagerDidRedoChangeNotification object:bookUndoManager];
-    
-    if (bookUndoManager == self.undoManager) {
-        self.unit.managedObjectContext.undoManager = nil;
-        self.undoManager = nil;
-    }
-}
-
-
-- (NSUndoManager *)undoManager {
-    
-    return self.unit.managedObjectContext.undoManager;
-}
-
-
-- (void)undoManagerDidUndo:(NSNotification *)notification {
-    
-    // Redisplay the data.
-    [self updateInterface];
-    [self updateRightBarButtonItemState];
-}
-
-
-- (void)undoManagerDidRedo:(NSNotification *)notification {
-    
-    // Redisplay the data.
-    [self updateInterface];
-    [self updateRightBarButtonItemState];
-}
-
 
 /*
  The view controller must be first responder in order to be able to receive shake events for undo. It should resign first responder status when it disappears.
@@ -302,11 +236,14 @@
 }
 
 - (IBAction)setCurrentGPS:(id)sender {
-    [undoManager setActionName:@"longitude"];
     self.unit.longitude=[NSNumber numberWithFloat:gLocation.coordinate.longitude];
     
-    [undoManager setActionName:@"latitude"];
     self.unit.latitude=[NSNumber numberWithFloat:gLocation.coordinate.latitude];
+    
+    NSError * error;
+    if (![_unit.managedObjectContext save:&error]) {
+        NSLog(@"error to save");
+    }
     
     [self updateInterface];
 }

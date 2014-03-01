@@ -15,12 +15,3 @@
 @property (nonatomic,strong) Unit * unit;
 
 @end
-
-// These methods are used by the AddViewController, so are declared here, but they are private to these classes.
-
-@interface UnitDetailViewController (Private)
-
-- (void)setUpUndoManager;
-- (void)cleanUpUndoManager;
-
-@end
