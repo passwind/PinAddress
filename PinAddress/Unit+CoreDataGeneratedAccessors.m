@@ -56,7 +56,10 @@
 
 - (void)addPhoto:(NSOrderedSet *)values
 {
+    NSMutableOrderedSet * tmpSet=[NSMutableOrderedSet orderedSetWithOrderedSet:self.photo];
     
+    [tmpSet unionOrderedSet:values];
+    self.photo=tmpSet;
 }
 
 - (void)removePhoto:(NSOrderedSet *)values

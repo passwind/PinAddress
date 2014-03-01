@@ -13,10 +13,12 @@
 #import "UIImage+fixOrientation.h"
 #import "UIImage+IF.h"
 #import "PhotoThumbCell.h"
+#import "CTAssetsPickerController.h"
+#import <AssetsLibrary/AssetsLibrary.h>
 
 #define kTagAddPhoto 9998
 
-@interface UnitPhotoViewController ()<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,PhotoThumbCellDelegate>
+@interface UnitPhotoViewController ()<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,PhotoThumbCellDelegate,CTAssetsPickerControllerDelegate>
 {
     dispatch_queue_t _imageProcessQueue;
 }
@@ -24,7 +26,6 @@
 @property (nonatomic, strong) UIBarButtonItem *rightBarButtonItem;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 - (IBAction)newPhoto:(id)sender;
-- (IBAction)deletePhoto:(id)sender;
 
 @end
 
@@ -177,7 +178,13 @@
 
     dispatch_async(_imageProcessQueue, ^{
         newPhoto.thumb=[self makeThumbImage:image];
+        
         dispatch_async(dispatch_get_main_queue(), ^{
+            NSError * error;
+            if (![_managedObjectContext save:&error]) {
+                NSLog(@"error save thumb");
+            }
+            
             [_collectionView reloadItemsAtIndexPaths:@[indexPath]];
         });
     });
@@ -208,16 +215,27 @@
         if (buttonIndex == 1) {
             return;
         } else {
-            sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+            sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         }
     }
     
-	UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
-	imagePickerController.delegate = self;
-//	imagePickerController.allowsEditing = YES;
-    imagePickerController.sourceType = sourceType;
-    
-    [self presentViewController:imagePickerController animated:YES completion:Nil];
+    if (sourceType==UIImagePickerControllerSourceTypeCamera) {
+        UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+        imagePickerController.delegate = self;
+        imagePickerController.sourceType = sourceType;
+        
+        [self presentViewController:imagePickerController animated:YES completion:Nil];
+    }
+    else if(sourceType == UIImagePickerControllerSourceTypePhotoLibrary)
+    {
+        CTAssetsPickerController *picker = [[CTAssetsPickerController alloc] init];
+        picker.maximumNumberOfSelection = 5;
+        picker.assetsFilter = [ALAssetsFilter allPhotos];
+        picker.delegate = self;
+        
+        [self presentViewController:picker animated:YES completion:NULL];
+    }
+	
 }
 
 #pragma mark - UICollectionView Datasource
@@ -265,17 +283,59 @@
     return headerView;
 }
 
-//#pragma mark - UICollectionViewDelegateFlowLayout
-//-(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    UnitPhoto * info=[_fetchedResultsController objectAtIndexPath:indexPath];
-//    UIImage * thumb=[UIImage imageWithData:info.thumb];
-//    
-//    CGSize retVal=thumb.size.width>0?thumb.size:CGSizeMake(100, 100);
-//    retVal.height+=10;
-//    retVal.width+=10;
-//    
-//    return retVal;
-//}
+#pragma mark - CTAssetsPickerControllerDelegate
+- (void)assetsPickerController:(CTAssetsPickerController *)picker didFinishPickingAssets:(NSArray *)assets
+{
+    [self dismissViewControllerAnimated:NO completion:^{
+        if ([assets count]>0) {
+            [assets enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                ALAsset * asset=obj;
+                ALAssetRepresentation * rep=[asset defaultRepresentation];
+                UIImage * image=[UIImage imageWithCGImage:[rep fullResolutionImage] scale:1.0 orientation:(UIImageOrientation)rep.orientation];
+                NSData* imageData = UIImagePNGRepresentation(image);
+                // Give a name to the file
+                NSString* imageName = [NSString stringWithFormat:@"%f.png",[[NSDate date] timeIntervalSinceReferenceDate]];
+                
+                // Now, we have to find the documents directory so we can save it
+                // Note that you might want to save it elsewhere, like the cache directory,
+                // or something similar.
+                NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                NSString* documentsDirectory = [paths objectAtIndex:0];
+                
+                // Now we get the full path to the file
+                NSString* fullPathToFile = [documentsDirectory stringByAppendingPathComponent:imageName];
+                
+                // and then we write it out
+                [imageData writeToFile:fullPathToFile atomically:NO];
+                
+                UnitPhoto * newPhoto=[NSEntityDescription insertNewObjectForEntityForName:@"UnitPhoto" inManagedObjectContext:self.managedObjectContext];
+                newPhoto.createdAt=[NSDate date];
+                newPhoto.localSrc=fullPathToFile;
+                [_unit addPhotoObject:newPhoto];
+                newPhoto.unit=_unit;
+                NSError * error;
+                
+                if (![self.managedObjectContext save:&error]) {
+                    NSLog(@"Unresolved error %@, %@",error,[error userInfo]);
+                    abort();
+                }
+            
+                NSIndexPath * indexPath=[NSIndexPath indexPathForItem:[_unit.photo count]-1 inSection:0];
+                [_collectionView insertItemsAtIndexPaths:@[indexPath]];
+                
+                dispatch_async(_imageProcessQueue, ^{
+                    newPhoto.thumb=[self makeThumbImage:image];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        NSError * error;
+                        if (![_managedObjectContext save:&error]) {
+                            NSLog(@"error save thumb");
+                        }
+                        [_collectionView reloadItemsAtIndexPaths:@[indexPath]];
+                    });
+                });
+            }];
+        }
+    }];
+}
 
 @end

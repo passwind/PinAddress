@@ -40,6 +40,10 @@
 		E452FC9C18C18F8F00F756E1 /* Unit.m in Sources */ = {isa = PBXBuildFile; fileRef = E452FC9B18C18F8F00F756E1 /* Unit.m */; };
 		E452FC9F18C18FF400F756E1 /* Unit+CoreDataGeneratedAccessors.m in Sources */ = {isa = PBXBuildFile; fileRef = E452FC9E18C18FF400F756E1 /* Unit+CoreDataGeneratedAccessors.m */; };
 		E452FCA218C1907E00F756E1 /* Site+CoreDataGeneratedAccessors.m in Sources */ = {isa = PBXBuildFile; fileRef = E452FCA118C1907E00F756E1 /* Site+CoreDataGeneratedAccessors.m */; };
+		E452FCA918C1AE9000F756E1 /* CTAssetsPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = E452FCA518C1AE9000F756E1 /* CTAssetsPickerController.m */; };
+		E452FCAA18C1AE9000F756E1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E452FCA618C1AE9000F756E1 /* Images.xcassets */; };
+		E452FCAB18C1AE9000F756E1 /* NSDate+TimeInterval.m in Sources */ = {isa = PBXBuildFile; fileRef = E452FCA818C1AE9000F756E1 /* NSDate+TimeInterval.m */; };
+		E452FCAD18C1B01300F756E1 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E452FCAC18C1B01300F756E1 /* AssetsLibrary.framework */; };
 		E492073818A9C43200AF4F1D /* SiteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E492073718A9C43100AF4F1D /* SiteViewController.m */; };
 		E492073B18A9C47000AF4F1D /* SiteDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E492073A18A9C47000AF4F1D /* SiteDetailViewController.m */; };
 		E492076D18A9EA3F00AF4F1D /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = E492076318A9EA3F00AF4F1D /* ioapi.c */; };
@@ -120,6 +124,12 @@
 		E452FC9E18C18FF400F756E1 /* Unit+CoreDataGeneratedAccessors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Unit+CoreDataGeneratedAccessors.m"; sourceTree = "<group>"; };
 		E452FCA018C1907E00F756E1 /* Site+CoreDataGeneratedAccessors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Site+CoreDataGeneratedAccessors.h"; sourceTree = "<group>"; };
 		E452FCA118C1907E00F756E1 /* Site+CoreDataGeneratedAccessors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Site+CoreDataGeneratedAccessors.m"; sourceTree = "<group>"; };
+		E452FCA418C1AE9000F756E1 /* CTAssetsPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTAssetsPickerController.h; sourceTree = "<group>"; };
+		E452FCA518C1AE9000F756E1 /* CTAssetsPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTAssetsPickerController.m; sourceTree = "<group>"; };
+		E452FCA618C1AE9000F756E1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		E452FCA718C1AE9000F756E1 /* NSDate+TimeInterval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+TimeInterval.h"; sourceTree = "<group>"; };
+		E452FCA818C1AE9000F756E1 /* NSDate+TimeInterval.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+TimeInterval.m"; sourceTree = "<group>"; };
+		E452FCAC18C1B01300F756E1 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		E492073618A9C43100AF4F1D /* SiteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SiteViewController.h; sourceTree = "<group>"; };
 		E492073718A9C43100AF4F1D /* SiteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SiteViewController.m; sourceTree = "<group>"; };
 		E492073918A9C47000AF4F1D /* SiteDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SiteDetailViewController.h; sourceTree = "<group>"; };
@@ -153,6 +163,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E452FCAD18C1B01300F756E1 /* AssetsLibrary.framework in Frameworks */,
 				E492077518A9F3E900AF4F1D /* libz.dylib in Frameworks */,
 				E438A95E1880405600678F84 /* CoreLocation.framework in Frameworks */,
 				E438A90A1880295C00678F84 /* CoreGraphics.framework in Frameworks */,
@@ -198,6 +209,7 @@
 		E438A9061880295C00678F84 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E452FCAC18C1B01300F756E1 /* AssetsLibrary.framework */,
 				E492077418A9F3E900AF4F1D /* libz.dylib */,
 				E438A95D1880405600678F84 /* CoreLocation.framework */,
 				E438A9071880295C00678F84 /* Foundation.framework */,
@@ -212,6 +224,7 @@
 		E438A90F1880295C00678F84 /* PinAddress */ = {
 			isa = PBXGroup;
 			children = (
+				E452FCA318C1AE9000F756E1 /* CTAssetsPickerController */,
 				E492077C18AA0B3D00AF4F1D /* MBProgressHUD.h */,
 				E492077D18AA0B3D00AF4F1D /* MBProgressHUD.m */,
 				E492077918AA0B2400AF4F1D /* Reachability.h */,
@@ -295,6 +308,18 @@
 				E438A9381880295C00678F84 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E452FCA318C1AE9000F756E1 /* CTAssetsPickerController */ = {
+			isa = PBXGroup;
+			children = (
+				E452FCA418C1AE9000F756E1 /* CTAssetsPickerController.h */,
+				E452FCA518C1AE9000F756E1 /* CTAssetsPickerController.m */,
+				E452FCA618C1AE9000F756E1 /* Images.xcassets */,
+				E452FCA718C1AE9000F756E1 /* NSDate+TimeInterval.h */,
+				E452FCA818C1AE9000F756E1 /* NSDate+TimeInterval.m */,
+			);
+			path = CTAssetsPickerController;
 			sourceTree = "<group>";
 		};
 		E492076018A9EA3F00AF4F1D /* ZipArchive */ = {
@@ -404,6 +429,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E438A9281880295C00678F84 /* Images.xcassets in Resources */,
+				E452FCAA18C1AE9000F756E1 /* Images.xcassets in Resources */,
 				E4238BD518849CCB00B98F7B /* Localizable.strings in Resources */,
 				E438A9141880295C00678F84 /* InfoPlist.strings in Resources */,
 				E438A91D1880295C00678F84 /* Main.storyboard in Resources */,
@@ -427,6 +453,7 @@
 			files = (
 				E438A94A1880317C00678F84 /* AddUnitViewController.m in Sources */,
 				E492073B18A9C47000AF4F1D /* SiteDetailViewController.m in Sources */,
+				E452FCA918C1AE9000F756E1 /* CTAssetsPickerController.m in Sources */,
 				E452FCA218C1907E00F756E1 /* Site+CoreDataGeneratedAccessors.m in Sources */,
 				E452FC9F18C18FF400F756E1 /* Unit+CoreDataGeneratedAccessors.m in Sources */,
 				E492077818AA0AB100AF4F1D /* tools.m in Sources */,
@@ -438,6 +465,7 @@
 				E492076F18A9EA3F00AF4F1D /* unzip.c in Sources */,
 				E492078118AA124900AF4F1D /* UIImage+fixOrientation.m in Sources */,
 				E492078418AA173000AF4F1D /* UIImage+IF.m in Sources */,
+				E452FCAB18C1AE9000F756E1 /* NSDate+TimeInterval.m in Sources */,
 				E492076D18A9EA3F00AF4F1D /* ioapi.c in Sources */,
 				E492077B18AA0B2400AF4F1D /* Reachability.m in Sources */,
 				E438A91A1880295C00678F84 /* AppDelegate.m in Sources */,
