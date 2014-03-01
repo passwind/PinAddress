@@ -31,31 +31,6 @@
 
 @implementation UnitViewController
 
--(NSFetchedResultsController*)fetchedResultsController
-{
-    if (_fetchedResultsController!=nil) {
-        return _fetchedResultsController;
-    }
-    
-    NSFetchRequest * fetchRequest=[[NSFetchRequest alloc] init];
-    NSEntityDescription * entity=[NSEntityDescription entityForName:@"Unit" inManagedObjectContext:_managedObjectContext];
-    [fetchRequest setEntity:entity];
-    
-    NSSortDescriptor * sort=[[NSSortDescriptor alloc] initWithKey:@"createdAt" ascending:NO];
-    [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sort]];
-    
-    NSPredicate *predicate =[NSPredicate predicateWithFormat:@"site == %@", _site];
-    [fetchRequest setPredicate:predicate];
-//
-//    [fetchRequest setFetchBatchSize:20];
-    
-    NSFetchedResultsController * theFetchedResultsController=[[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:_managedObjectContext sectionNameKeyPath:nil cacheName:@"Root"];
-    self.fetchedResultsController=theFetchedResultsController;
-    _fetchedResultsController.delegate=self;
-    
-    return _fetchedResultsController;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -65,11 +40,7 @@
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     self.title=_site.name;
     
-    NSError * error;
-    if (![[self fetchedResultsController] performFetch:&error]) {
-        NSLog(@"Unresolved error %@ %@",error,[error userInfo]);
-        exit(-1);
-    }
+    self.managedObjectContext=_site.managedObjectContext;
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -88,20 +59,19 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return [[self.fetchedResultsController sections] count];
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    id sectionInfo=[[_fetchedResultsController sections] objectAtIndex:section];
     
-    return [sectionInfo numberOfObjects];
+    return [_site.units count];
 }
 
 -(void)configureCell:(UITableViewCell*)cell atIndexPath:(NSIndexPath*)indexPath
 {
-    Unit * info=[_fetchedResultsController objectAtIndexPath:indexPath];
+    Unit * info=_site.units[indexPath.row];
     cell.textLabel.text=info.name;
 }
 
@@ -120,11 +90,12 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
         // Delete the managed object.
-        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+        Unit * unit=_site.units[indexPath.row];
+        [_site removeUnitsObject:unit];
+        [_managedObjectContext deleteObject:unit];
         
         NSError *error;
-        if (![context save:&error]) {
+        if (![_managedObjectContext save:&error]) {
             /*
              Replace this implementation with code to handle the error appropriately.
              
@@ -133,49 +104,9 @@
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         }
+        
+        [_tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
-}
-
--(void)controllerWillChangeContent:(NSFetchedResultsController *)controller
-{
-    [self.tableView beginUpdates];
-}
-
--(void)controller:(NSFetchedResultsController*)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
-{
-    UITableView * tableView=self.tableView;
-    switch (type) {
-        case NSFetchedResultsChangeInsert:
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-        case NSFetchedResultsChangeDelete:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-        case NSFetchedResultsChangeUpdate:
-            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
-            break;
-        case NSFetchedResultsChangeMove:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-    }
-}
-
--(void)controller:(NSFetchedResultsController *)controller didChangeSection:(id<NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
-{
-    switch (type) {
-        case NSFetchedResultsChangeInsert:
-            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-        case NSFetchedResultsChangeDelete:
-            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-    }
-}
-
--(void)controllerDidChangeContent:(NSFetchedResultsController *)controller
-{
-    [self.tableView endUpdates];
 }
 
 -(void)setEditing:(BOOL)editing animated:(BOOL)animated
@@ -198,7 +129,7 @@
         addUnitViewController.delegate=self;
         
         NSManagedObjectContext * addingContext=[[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
-        [addingContext setParentContext:[self.fetchedResultsController managedObjectContext]];
+        [addingContext setParentContext:_managedObjectContext];
         
         _addingUnit=(Unit*)[NSEntityDescription insertNewObjectForEntityForName:@"Unit" inManagedObjectContext:addingContext];
         _addingUnit.name=@"新建地点";
@@ -209,7 +140,7 @@
     
     if([segue.identifier isEqualToString:@"ShowUnitDetail"]){
         NSIndexPath * indexPath=[self.tableView indexPathForSelectedRow];
-        Unit * selectedUnit=(Unit*)[_fetchedResultsController objectAtIndexPath:indexPath];
+        Unit * selectedUnit=_site.units[indexPath.row];
         
         UnitDetailViewController * unitDetailViewController=[segue destinationViewController];
         unitDetailViewController.unit=selectedUnit;
@@ -235,10 +166,12 @@
             abort();
         }
         
-        if (![[self.fetchedResultsController managedObjectContext] save:&error]) {
+        if (![_managedObjectContext save:&error]) {
             NSLog(@"Unresolved error %@, %@",error,[error userInfo]);
             abort();
         }
+        NSIndexPath * indexPath=[NSIndexPath indexPathForRow:[_site.units count]-1 inSection:0];
+        [_tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
     
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -266,13 +199,13 @@
     NSMutableDictionary * siteDic=[NSMutableDictionary dictionaryWithObjectsAndKeys:_site.name,@"siteName",[df stringFromDate:_site.createdAt],@"createdAt", nil];
     NSMutableArray * unitArray=[NSMutableArray arrayWithCapacity:[_site.units count]];
     
-    [_site.units enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+    [_site.units enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         Unit * unit=obj;
         
         NSMutableDictionary * unitDic=[NSMutableDictionary dictionaryWithObjectsAndKeys:unit.name,@"unitName",[df stringFromDate:unit.createdAt],@"createdAt",unit.latitude,@"latitude",unit.longitude,@"longitude",nil];
         
         NSMutableArray * scopeArray=[NSMutableArray arrayWithCapacity:[unit.scope count]];
-        [unit.scope enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        [unit.scope enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             UnitScope * scope=obj;
             NSDictionary * scopeDic=[NSDictionary dictionaryWithObjectsAndKeys:scope.latitude,@"latitude",scope.longitude,@"longitude",[df stringFromDate:scope.createdAt],@"createdAt", nil];
             [scopeArray addObject:scopeDic];
@@ -280,7 +213,7 @@
         [unitDic setObject:scopeArray forKey:@"scope"];
         
         NSMutableArray * photoArray=[NSMutableArray arrayWithCapacity:[unit.photo count]];
-        [unit.photo enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        [unit.photo enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             UnitPhoto * photo=obj;
             NSURL * filePath=[NSURL fileURLWithPath:photo.localSrc];
             NSString * filename=[filePath lastPathComponent];

@@ -12,12 +12,19 @@
 #import "UnitPhotoCell.h"
 #import "UIImage+fixOrientation.h"
 #import "UIImage+IF.h"
+#import "PhotoThumbCell.h"
 
-@interface UnitPhotoViewController ()
+#define kTagAddPhoto 9998
+
+@interface UnitPhotoViewController ()<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,PhotoThumbCellDelegate>
+{
+    dispatch_queue_t _imageProcessQueue;
+}
 
 @property (nonatomic, strong) UIBarButtonItem *rightBarButtonItem;
-@property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 - (IBAction)newPhoto:(id)sender;
+- (IBAction)deletePhoto:(id)sender;
 
 @end
 
@@ -35,22 +42,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	UIBarButtonItem *editButton = [[UIBarButtonItem alloc]
-                                   initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editAction:)];
+    _imageProcessQueue=dispatch_queue_create("com.hollysmart.pinaddress", NULL);
     
-    self.navigationItem.rightBarButtonItem = editButton;
-    
-    
-    self.title=[NSString stringWithFormat:@"%@ 范围坐标",_unit.name];
+    self.title=[NSString stringWithFormat:@"%@ 地点图片",_unit.name];
     
     self.managedObjectContext=_unit.managedObjectContext;
-    
-    NSError * error;
-    if (![[self fetchedResultsController] performFetch:&error]) {
-        NSLog(@"Unresolved error %@ %@",error,[error userInfo]);
-        exit(-1);
-    }
-
 }
 
 - (void)didReceiveMemoryWarning
@@ -59,196 +55,7 @@
     // Dispose of any resources that can be recreated.
 }
 
--(NSFetchedResultsController*)fetchedResultsController
-{
-    if (_fetchedResultsController!=nil) {
-        return _fetchedResultsController;
-    }
-    
-    NSFetchRequest * fetchRequest=[[NSFetchRequest alloc] init];
-    NSEntityDescription * entity=[NSEntityDescription entityForName:@"UnitPhoto" inManagedObjectContext:_managedObjectContext];
-    [fetchRequest setEntity:entity];
-    
-    NSPredicate *predicate =[NSPredicate predicateWithFormat:@"unit == %@", _unit];
-    [fetchRequest setPredicate:predicate];
-    
-    NSSortDescriptor * sort=[[NSSortDescriptor alloc] initWithKey:@"createdAt" ascending:NO];
-    [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sort]];
-    
-    //    [fetchRequest setFetchBatchSize:20];
-    
-    NSFetchedResultsController * theFetchedResultsController=[[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:_managedObjectContext sectionNameKeyPath:nil cacheName:@"Root"];
-    self.fetchedResultsController=theFetchedResultsController;
-    _fetchedResultsController.delegate=self;
-    
-    return _fetchedResultsController;
-}
-
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    // Return the number of sections.
-    return [[self.fetchedResultsController sections] count];
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    // Return the number of rows in the section.
-    id sectionInfo=[[_fetchedResultsController sections] objectAtIndex:section];
-    
-    return [sectionInfo numberOfObjects];
-}
-
--(void)configureCell:(UnitPhotoCell*)cell atIndexPath:(NSIndexPath*)indexPath
-{
-    UnitPhoto * info=[_fetchedResultsController objectAtIndexPath:indexPath];
-    UIImage * image=[UIImage imageWithData:info.thumb];
-    
-    cell.imageView.image=image;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"UnitPhotoCell";
-    UnitPhotoCell *cell = (UnitPhotoCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
-    [self configureCell:cell atIndexPath:indexPath];
-    
-    return cell;
-}
-
--(void)controllerWillChangeContent:(NSFetchedResultsController *)controller
-{
-    [self.tableView beginUpdates];
-}
-
--(void)controller:(NSFetchedResultsController*)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
-{
-    UITableView * tableView=self.tableView;
-    switch (type) {
-        case NSFetchedResultsChangeInsert:
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-        case NSFetchedResultsChangeDelete:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-        case NSFetchedResultsChangeUpdate:
-            [self configureCell:(UnitPhotoCell*)[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
-            break;
-        case NSFetchedResultsChangeMove:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-    }
-}
-
--(void)controller:(NSFetchedResultsController *)controller didChangeSection:(id<NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
-{
-    switch (type) {
-        case NSFetchedResultsChangeInsert:
-            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-        case NSFetchedResultsChangeDelete:
-            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-    }
-}
-
--(void)controllerDidChangeContent:(NSFetchedResultsController *)controller
-{
-    [self.tableView endUpdates];
-}
-
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        
-        // Delete the managed object.
-        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
-        
-        NSError *error;
-        if (![context save:&error]) {
-            /*
-             Replace this implementation with code to handle the error appropriately.
-             
-             abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-             */
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        }
-    }
-}
-
-#pragma mark - Table view editing
-
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    // The table view should not be re-orderable.
-    return NO;
-}
-
-- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
-    
-    [super setEditing:editing animated:animated];
-    
-    if (editing) {
-        self.rightBarButtonItem = self.navigationItem.rightBarButtonItem;
-        self.navigationItem.rightBarButtonItem = nil;
-    }
-    else {
-        self.navigationItem.rightBarButtonItem = self.rightBarButtonItem;
-        self.rightBarButtonItem = nil;
-    }
-}
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
- */
-
-/*
- #pragma mark - Navigation
- 
- // In a story board-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- 
- */
-
-#pragma mark - add method
-
-- (void)editAction:(id)sender {
-	[self.tableView setEditing:YES animated:YES];
-	[self addButtons:self.tableView.editing];
-}
-
-- (void)addButtons:(BOOL)editing {
-	if (editing) {
-		// Add the "done" button to the navigation bar
-		UIBarButtonItem *doneButton = [[UIBarButtonItem alloc]
-									   initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneAction:)];
-		
-		self.navigationItem.rightBarButtonItem = doneButton;
-	} else {
-		UIBarButtonItem *editButton = [[UIBarButtonItem alloc]
-                                       initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editAction:)];
-        
-        self.navigationItem.rightBarButtonItem = editButton;
-	}
-}
-
-- (void)doneAction:(id)sender {
-	[self.tableView setEditing:NO animated:YES];
-	[self addButtons:self.tableView.editing];
-}
+#pragma mark - control function
 
 - (IBAction)newPhoto:(id)sender {
     UIActionSheet *choosePhotoActionSheet;
@@ -268,6 +75,30 @@
     }
     
     [choosePhotoActionSheet showInView:self.view];
+}
+
+#pragma mark - PhotoThumbCellDelegate
+-(void)photoThumbCell:(PhotoThumbCell *)cell didDelete:(id)sender
+{
+    NSIndexPath * indexPath=[_collectionView indexPathForCell:cell];
+    
+    // Delete the managed object.
+    UnitPhoto * unitPhoto=_unit.photo[indexPath.item];
+    [_unit removePhotoObject:unitPhoto];
+    [_managedObjectContext deleteObject:unitPhoto];
+    
+    NSError *error;
+    if (![_managedObjectContext save:&error]) {
+        /*
+         Replace this implementation with code to handle the error appropriately.
+         
+         abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+         */
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    
+    [_collectionView deleteItemsAtIndexPaths:@[indexPath]];
 }
 
 -(NSData*)makeThumbImage:(UIImage*)origImage
@@ -302,6 +133,7 @@
 }
 
 #pragma mark - UIImagePickerControllerDelegate
+
 //得到图片信息
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
@@ -328,7 +160,8 @@
     UnitPhoto * newPhoto=[NSEntityDescription insertNewObjectForEntityForName:@"UnitPhoto" inManagedObjectContext:self.managedObjectContext];
     newPhoto.createdAt=[NSDate date];
     newPhoto.localSrc=fullPathToFile;
-    newPhoto.thumb=[self makeThumbImage:image];
+
+    NSIndexPath * indexPath=[NSIndexPath indexPathForRow:[_unit.photo count] inSection:0];
     newPhoto.unit=_unit;
     
     [_unit addPhotoObject:newPhoto];
@@ -339,8 +172,15 @@
         NSLog(@"Unresolved error %@, %@",error,[error userInfo]);
         abort();
     }
-
     
+    [_collectionView insertItemsAtIndexPaths:@[indexPath]];
+
+    dispatch_async(_imageProcessQueue, ^{
+        newPhoto.thumb=[self makeThumbImage:image];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [_collectionView reloadItemsAtIndexPaths:@[indexPath]];
+        });
+    });
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
@@ -379,5 +219,63 @@
     
     [self presentViewController:imagePickerController animated:YES completion:Nil];
 }
+
+#pragma mark - UICollectionView Datasource
+
+-(void)configureCell:(PhotoThumbCell*)cell atIndexPath:(NSIndexPath*)indexPath
+{
+    UnitPhoto * info=_unit.photo[indexPath.row];
+    UIImage * image;
+    
+    if (info.thumb) {
+        image=[UIImage imageWithData:info.thumb];
+    }
+    else{
+        image=[UIImage imageNamed:@"default_image"];
+    }
+    
+    cell.imageView.image=image;
+    cell.delegate=self;
+}
+
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    // Return the number of rows in the section.
+    
+    return [_unit.photo count];
+}
+
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return 1;
+}
+
+-(UICollectionViewCell*)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    PhotoThumbCell * cell=(PhotoThumbCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"PhotoThumbCell" forIndexPath:indexPath];
+    [self configureCell:cell atIndexPath:indexPath];
+    
+    return cell;
+}
+
+-(UICollectionReusableView*)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionReusableView * headerView=[collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"ThumbHeaderView" forIndexPath:indexPath];
+    
+    return headerView;
+}
+
+//#pragma mark - UICollectionViewDelegateFlowLayout
+//-(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    UnitPhoto * info=[_fetchedResultsController objectAtIndexPath:indexPath];
+//    UIImage * thumb=[UIImage imageWithData:info.thumb];
+//    
+//    CGSize retVal=thumb.size.width>0?thumb.size:CGSizeMake(100, 100);
+//    retVal.height+=10;
+//    retVal.width+=10;
+//    
+//    return retVal;
+//}
 
 @end

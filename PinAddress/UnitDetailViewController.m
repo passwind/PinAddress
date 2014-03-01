@@ -134,6 +134,7 @@
         }
         return nil;
     }
+    
     return indexPath;
 }
 
@@ -261,19 +262,19 @@
     if ([[segue identifier] isEqualToString:@"EditSelectedItem"]) {
         
         EditingViewController *controller = (EditingViewController *)[segue destinationViewController];
-        controller.editedObject = self.unit;
+        controller.editedObject = _unit;
         controller.editedFieldKey = @"name";
         controller.editedFieldName = NSLocalizedString(@"name", @"display name for title");
     }
     
     if ([[segue identifier] isEqualToString:@"ShowUnitScope"]) {
         UnitScopeViewController *unitScopeViewController=(UnitScopeViewController*)[segue destinationViewController];
-        unitScopeViewController.unit=self.unit;
+        unitScopeViewController.unit=_unit;
     }
     
     if ([[segue identifier] isEqualToString:@"ShowUnitPhoto"]) {
         UnitPhotoViewController *unitPhotoViewController=(UnitPhotoViewController*)[segue destinationViewController];
-        unitPhotoViewController.unit=self.unit;
+        unitPhotoViewController.unit=_unit;
     }
 }
 

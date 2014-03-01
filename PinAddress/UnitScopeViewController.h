@@ -10,11 +10,10 @@
 
 #import "Unit.h"
 
-@interface UnitScopeViewController : UIViewController<NSFetchedResultsControllerDelegate,UITableViewDataSource,UITableViewDelegate>
+@interface UnitScopeViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic,strong) Unit * unit;
 
 @property (nonatomic,strong) NSManagedObjectContext * managedObjectContext;
-@property (nonatomic,retain) NSFetchedResultsController * fetchedResultsController;
 
 @end

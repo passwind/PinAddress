@@ -20,31 +20,6 @@
 
 @implementation UnitScopeViewController
 
--(NSFetchedResultsController*)fetchedResultsController
-{
-    if (_fetchedResultsController!=nil) {
-        return _fetchedResultsController;
-    }
-    
-    NSFetchRequest * fetchRequest=[[NSFetchRequest alloc] init];
-    NSEntityDescription * entity=[NSEntityDescription entityForName:@"UnitScope" inManagedObjectContext:_managedObjectContext];
-    [fetchRequest setEntity:entity];
-    
-    NSPredicate *predicate =[NSPredicate predicateWithFormat:@"unit == %@", _unit];
-    [fetchRequest setPredicate:predicate];
-    
-    NSSortDescriptor * sort=[[NSSortDescriptor alloc] initWithKey:@"createdAt" ascending:NO];
-    [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sort]];
-    
-    //    [fetchRequest setFetchBatchSize:20];
-    
-    NSFetchedResultsController * theFetchedResultsController=[[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:_managedObjectContext sectionNameKeyPath:nil cacheName:@"Root"];
-    self.fetchedResultsController=theFetchedResultsController;
-    _fetchedResultsController.delegate=self;
-    
-    return _fetchedResultsController;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -61,12 +36,6 @@
     self.title=[NSString stringWithFormat:@"%@ 范围坐标",_unit.name];
     
     self.managedObjectContext=_unit.managedObjectContext;
-    
-    NSError * error;
-    if (![[self fetchedResultsController] performFetch:&error]) {
-        NSLog(@"Unresolved error %@ %@",error,[error userInfo]);
-        exit(-1);
-    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -80,20 +49,19 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return [[self.fetchedResultsController sections] count];
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    id sectionInfo=[[_fetchedResultsController sections] objectAtIndex:section];
     
-    return [sectionInfo numberOfObjects];
+    return [_unit.scope count];
 }
 
 -(void)configureCell:(UnitScopeCell*)cell atIndexPath:(NSIndexPath*)indexPath
 {
-    UnitScope * info=[_fetchedResultsController objectAtIndexPath:indexPath];
+    UnitScope * info=_unit.scope[indexPath.row];
     cell.latitudeLabel.text = [NSString stringWithFormat:@"%.6f",[info.latitude floatValue]];
     cell.longitudeLabel.text = [NSString stringWithFormat:@"%.6f",[info.longitude floatValue]];
 }
@@ -108,59 +76,19 @@
     return cell;
 }
 
--(void)controllerWillChangeContent:(NSFetchedResultsController *)controller
-{
-    [self.tableView beginUpdates];
-}
-
--(void)controller:(NSFetchedResultsController*)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
-{
-    UITableView * tableView=self.tableView;
-    switch (type) {
-        case NSFetchedResultsChangeInsert:
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-        case NSFetchedResultsChangeDelete:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-        case NSFetchedResultsChangeUpdate:
-            [self configureCell:(UnitScopeCell*)[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
-            break;
-        case NSFetchedResultsChangeMove:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-    }
-}
-
--(void)controller:(NSFetchedResultsController *)controller didChangeSection:(id<NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
-{
-    switch (type) {
-        case NSFetchedResultsChangeInsert:
-            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-        case NSFetchedResultsChangeDelete:
-            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-    }
-}
-
--(void)controllerDidChangeContent:(NSFetchedResultsController *)controller
-{
-    [self.tableView endUpdates];
-}
-
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
         // Delete the managed object.
-        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+        
+        UnitScope * info=_unit.scope[indexPath.row];
+        [_unit removeScopeObject:info];
+        [_managedObjectContext deleteObject:info];
         
         NSError *error;
-        if (![context save:&error]) {
+        if (![_managedObjectContext save:&error]) {
             /*
              Replace this implementation with code to handle the error appropriately.
              
@@ -169,6 +97,8 @@
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         }
+        
+        [_tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
 }
 
@@ -231,6 +161,9 @@
         NSLog(@"Unresolved error %@, %@",error,[error userInfo]);
         abort();
     }
+    
+    NSIndexPath * indexPath=[NSIndexPath indexPathForRow:[_unit.scope count]-1 inSection:0];
+    [_tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 - (void)editAction:(id)sender {

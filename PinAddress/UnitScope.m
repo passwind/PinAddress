@@ -2,7 +2,7 @@
 //  UnitScope.m
 //  PinAddress
 //
-//  Created by Zhu Yu on 14-1-10.
+//  Created by Zhu Yu on 14-3-1.
 //  Copyright (c) 2014年 hollysmart. All rights reserved.
 //
 
@@ -12,9 +12,9 @@
 
 @implementation UnitScope
 
-@dynamic longitude;
-@dynamic latitude;
 @dynamic createdAt;
+@dynamic latitude;
+@dynamic longitude;
 @dynamic unit;
 
 @end

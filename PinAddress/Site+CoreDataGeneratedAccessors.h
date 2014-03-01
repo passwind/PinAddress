@@ -1,5 +1,5 @@
 //
-//  Site.m
+//  Site+CoreDataGeneratedAccessors.h
 //  PinAddress
 //
 //  Created by Zhu Yu on 14-3-1.
@@ -7,13 +7,4 @@
 //
 
 #import "Site.h"
-#import "Unit.h"
 
-
-@implementation Site
-
-@dynamic createdAt;
-@dynamic name;
-@dynamic units;
-
-@end

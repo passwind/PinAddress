@@ -9,11 +9,10 @@
 #import "UnitScopeViewController.h"
 @class Unit;
 
-@interface UnitPhotoViewController : UIViewController<NSFetchedResultsControllerDelegate,UITableViewDataSource,UITableViewDelegate,UIImagePickerControllerDelegate,UIActionSheetDelegate,UINavigationControllerDelegate>
+@interface UnitPhotoViewController : UIViewController<UIImagePickerControllerDelegate,UIActionSheetDelegate,UINavigationControllerDelegate>
 
 @property (nonatomic,strong) Unit * unit;
 
 @property (nonatomic,strong) NSManagedObjectContext * managedObjectContext;
-@property (nonatomic,retain) NSFetchedResultsController * fetchedResultsController;
 
 @end

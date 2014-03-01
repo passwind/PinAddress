@@ -10,10 +10,9 @@
 
 @class Site;
 
-@interface UnitViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,NSFetchedResultsControllerDelegate>
+@interface UnitViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic,strong) NSManagedObjectContext * managedObjectContext;
-@property (nonatomic,retain) NSFetchedResultsController * fetchedResultsController;
 
 @property (nonatomic,strong) Site * site;
 
